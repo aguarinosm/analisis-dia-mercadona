@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* Tipografía corporativa clásica, estilo informe financiero */
+        /* Tipografía corporativa clásica, estilo informe financiero (sin florituras) */
         body { 
             font-family: Arial, Helvetica, sans-serif; 
             background-color: #f3f4f6; 
@@ -23,7 +23,7 @@
         .data-table-header { background-color: #1f2937; color: #ffffff; }
         .data-table-row { border-bottom: 1px solid #e5e7eb; }
         
-        /* Colores corporativos */
+        /* Colores corporativos exactos */
         .c-dia { color: #E5231B; } /* Rojo Corporativo DIA */
         .bg-dia { background-color: #E5231B; }
         .c-mercadona { color: #008249; } /* Verde Corporativo Mercadona */
@@ -48,6 +48,10 @@
                 <span class="inline-block bg-dia text-white text-xs px-2 py-1 uppercase font-bold tracking-wider">Estrictamente Confidencial</span>
                 <p class="text-xs text-gray-500 mt-2">Fecha: Agosto 2026</p>
                 <p class="text-xs text-gray-500">Autor: Abel Guarinos</p>
+                <!-- Contador discreto de visitas -->
+                <p class="text-xs text-gray-400 mt-2 flex items-center justify-end gap-1" title="Visualizaciones del informe">
+                    👁️ <span id="view-counter"></span>
+                </p>
             </div>
         </header>
 
@@ -232,6 +236,25 @@
                 }
             }
         });
+
+        // Script para el contador de visualizaciones
+        document.addEventListener("DOMContentLoaded", () => {
+            let views = localStorage.getItem('dia_project_views');
+            if (!views) {
+                // Empieza de 0, la primera visita suma 1
+                views = 1; 
+            } else {
+                // Si es una segunda vez (o posteriores), suma 2
+                views = parseInt(views) + 2; 
+            }
+            localStorage.setItem('dia_project_views', views);
+            
+            // Formatea el número y lo inyecta en el HTML
+            document.getElementById('view-counter').innerText = views.toLocaleString('es-ES');
+        });
+    </script>
+</body>
+</html>
     </script>
 </body>
 </html>
